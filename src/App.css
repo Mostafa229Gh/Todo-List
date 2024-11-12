@@ -1,3 +1,10 @@
-.App {
+*,
+*::after,
+*::before {
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
 }
+
 
