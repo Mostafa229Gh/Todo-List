@@ -11,7 +11,10 @@ module.exports = {
     },
     fontFamily: {
       'Audiowide':['Audiowide'],
-      'Anta':['Anta']
+      'Anta':['Anta'],
+      'Roboto':['Roboto'],
+      'DoppioOne':['Doppio One'],
+      'LexendDeca':['Lexend Deca']
     }
   },
   plugins: [],
