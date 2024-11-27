@@ -1,3 +1,17 @@
-
-
-
+.form-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.3px solid #121a21;
+  border-radius: 4px;
+  background-color: #f1f8f5;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.form-checkbox:checked {
+  background-image: url("asset/check.svg");
+  background-repeat: no-repeat;
+  background-size: 16px; 
+  background-position: center;
+}
