@@ -7,7 +7,7 @@ function App() {
   const [addNew, setAddNew] = useState(false);
 
   return (
-    <div className="App h-svh">
+    <div className="App">
       <header className="flex justify-between p-6">
         <span className="font-Audiowide text-Charcoal-Blue sm:text-2xl">
           ToDo List
@@ -41,8 +41,9 @@ function App() {
             transition-transform duration-500 ease-ebol ${
               addNew ? "rotate-45" : ""
             }`}
-          width="60"
-          height="60"
+          width="53"
+          height="53"
+          viewBox="0 0 53 53"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M26.5 1.87709C12.8967 1.87709 1.87709 12.8967 1.87709 26.5C1.87709 40.1033 12.8967 51.1229 26.5 51.1229C40.1033 51.1229 51.1229 40.1033 51.1229 26.5C51.1229 12.8967 40.1033 1.87709 26.5 1.87709ZM38.8115 30.199H30.199V38.8115H22.8121V30.199H14.1885V22.8121H22.8121V14.1885H30.199V22.8121H38.8115V30.199Z" />

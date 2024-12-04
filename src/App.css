@@ -15,3 +15,6 @@
   background-size: 16px; 
   background-position: center;
 }
+.priorities {
+  @apply flex items-center w-72 h-8 bg-Soft-Azure rounded-lg pl-2;
+}

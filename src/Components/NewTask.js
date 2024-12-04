@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import PriorityOptions from "./PriorityOptions";
+import DeadlineOption from "./DeadlineOption";
 
 function NewTask() {
+  const [selectedTaskOption, setSelectedTaskOption] = useState(""); // Tracks both task option and priority
+
+  const handleOptionChange = (value) => {
+    setSelectedTaskOption(value);
+  };
+
   return (
     <div
       className="
-    w-80 sm:w-1/2 
-    h-[37.5rem]
-    px-3.5 py-4
-    fixed 
-    top-1/2 left-1/2 
-    -translate-x-1/2 -translate-y-1/2 sm:-translate-y-[55%] 
-    rounded-xl 
-    bg-Light-Sky shadow-form"
+        w-80 sm:w-1/2 
+        h-3/4 sm:h-4/5 
+        px-3.5 py-4 
+        fixed top-1/2 left-1/2 -translate-x-1/2 
+        -translate-y-1/2 sm:-translate-y-[55%] 
+        rounded-xl 
+        bg-Light-Sky 
+        shadow-form"
     >
       <form
         action=""
@@ -28,7 +36,7 @@ function NewTask() {
         </div>
 
         <div>
-          <label for="description" className="block text-sm text-Gunmetal">
+          <label htmlFor="description" className="block text-sm text-Gunmetal">
             Description
           </label>
           <textarea
@@ -46,6 +54,8 @@ function NewTask() {
                 type="radio"
                 name="taskOption"
                 value="Setting Priorities"
+                checked={selectedTaskOption.startsWith("Setting Priorities")}
+                onChange={(e) => handleOptionChange(e.target.value)}
                 className="form-checkbox"
                 required
               />
@@ -56,6 +66,8 @@ function NewTask() {
                 type="radio"
                 name="taskOption"
                 value="Establishing a Deadline"
+                checked={selectedTaskOption === "Establishing a Deadline"}
+                onChange={(e) => handleOptionChange(e.target.value)}
                 className="form-checkbox"
                 required
               />
@@ -64,9 +76,19 @@ function NewTask() {
           </div>
         </div>
 
-        <div>
-          {/* Here Should add something */}
-        </div>
+        {selectedTaskOption.startsWith("Setting Priorities") && (
+          <PriorityOptions
+            selectedPriority={selectedTaskOption
+              .replace("Setting Priorities:", "")
+              .trim()}
+            onPriorityChange={(priority) =>
+              handleOptionChange(`Setting Priorities: ${priority}`)
+            }
+          />
+        )}
+        {(selectedTaskOption === "Establishing a Deadline") && (
+          <DeadlineOption/>
+        )}
 
         <div className="flex flex-col flex-grow justify-end mt-4">
           <button

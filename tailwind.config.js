@@ -9,6 +9,13 @@ module.exports = {
         Gunmetal: "#2C3E50",
         "Light-Sky": "#C3D7E9",
         "Cool-Gray": "#8E9BA2",
+        "Soft-Azure": "#577AC190",
+        "Sky-Blue":"#90B9E0",
+        "Mint-Green":"#9BEA96",
+        "Dusty-Rose":"#E7C3C3",
+        "Golden-Sand":"#E9D889",
+        Apricot:"#FACA96"
+
       },
       transitionTimingFunction: {
         ebol: "cubic-bezier(0, 0, 0.01, 1)",
