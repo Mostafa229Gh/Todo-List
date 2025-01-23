@@ -18,3 +18,6 @@
 .priorities {
   @apply flex items-center w-72 h-8 bg-Soft-Azure rounded-lg pl-2;
 }
+.modalMenuItem {
+  @apply flex items-center justify-center w-full h-9 rounded-md text-Pale-Mint ease-ebol hover:text-[0.9375rem] ;
+}

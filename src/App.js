@@ -2,9 +2,11 @@ import "./App.css";
 import React, { useState } from "react";
 import FirstShow from "./Components/FirstShow";
 import NewTask from "./Components/NewTask";
+import ModalMenu from "./Components/ModalMenu";
 
 function App() {
   const [addNew, setAddNew] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="App">
@@ -13,7 +15,10 @@ function App() {
           ToDo List
         </span>
         <svg
-          className="sm:scale-125"
+          onClick={() => setShowModal(true)}
+          className={`cursor-pointer sm:scale-125 ${
+            showModal ? "hidden" : "block"
+          } `}
           width="24"
           height="24"
           fill="none"
@@ -27,14 +32,20 @@ function App() {
             stroke-linejoin="round"
           />
         </svg>
+        {showModal && <ModalMenu onClose={() => setShowModal(false)} />}
       </header>
 
       <FirstShow />
       {addNew && <NewTask />}
       <button
         className={`fixed bottom-0 right-0 mb-5
-          transition-all duration-500 ease-ebol ${addNew ? "right-[calc(50%-30px)]  mr-0" : "mr-4"}`}
-        onClick={() => setAddNew((prev) => !prev)}
+          transition-all duration-500 ease-ebol ${
+            addNew ? "right-[calc(50%-30px)]  mr-0" : "mr-4"
+          }`}
+        onClick={() => {
+          setShowModal(false);
+          setAddNew((prev) => !prev);
+        }}
       >
         <svg
           className={`fill-Gunmetal scale-125 drop-shadow-md sm:scale-150 
