@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import FirstShow from "./Components/FirstShow";
 import NewTask from "./Components/NewTask";
 import ModalMenu from "./Components/ModalMenu";
+import TaskList from "./Components/TaskList";
 
 function App() {
   const [addNew, setAddNew] = useState(false);
@@ -60,6 +61,7 @@ function App() {
 
       {!hasTasks && <FirstShow />}
       {addNew && <NewTask onClose={handleCloseNewTask} onTaskAdded={handleTaskUpdated} />}
+      {hasTasks && <TaskList/>}
 
       {/* Plus Button */}
       <button
