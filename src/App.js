@@ -1,12 +1,34 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FirstShow from "./Components/FirstShow";
 import NewTask from "./Components/NewTask";
 import ModalMenu from "./Components/ModalMenu";
 
 function App() {
   const [addNew, setAddNew] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showModalMenu, setShowModalMenu] = useState(false);
+  const [hasTasks, setHasTasks] = useState(false);
+
+  // check local storage is empty
+  const checkLocalStorage = () => {
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    if (!tasks || tasks.length === 0) {
+      return false;
+    }
+    return true;
+  };
+  useEffect(() => {
+    const tasksExist = checkLocalStorage();
+    setHasTasks(tasksExist);
+  }, []);
+  const handleTaskUpdated = () => {
+    const tasksExist = checkLocalStorage();
+    setHasTasks(tasksExist);
+  };
+  
+  const handleCloseNewTask = () => {
+    setAddNew(false);
+  };
 
   return (
     <div className="App">
@@ -14,10 +36,11 @@ function App() {
         <span className="font-Audiowide text-Charcoal-Blue sm:text-2xl">
           ToDo List
         </span>
+        {/* Menu Icon */}
         <svg
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowModalMenu(true)}
           className={`cursor-pointer sm:scale-125 ${
-            showModal ? "hidden" : "block"
+            showModalMenu ? "hidden" : "block"
           } `}
           width="24"
           height="24"
@@ -32,18 +55,20 @@ function App() {
             stroke-linejoin="round"
           />
         </svg>
-        {showModal && <ModalMenu onClose={() => setShowModal(false)} />}
+        {showModalMenu && <ModalMenu onClose={() => setShowModalMenu(false)} onTaskRemove={handleTaskUpdated} />}
       </header>
 
-      <FirstShow />
-      {addNew && <NewTask />}
+      {!hasTasks && <FirstShow />}
+      {addNew && <NewTask onClose={handleCloseNewTask} onTaskAdded={handleTaskUpdated} />}
+
+      {/* Plus Button */}
       <button
         className={`fixed bottom-0 right-0 mb-5
           transition-all duration-500 ease-ebol ${
             addNew ? "right-[calc(50%-30px)]  mr-0" : "mr-4"
           }`}
         onClick={() => {
-          setShowModal(false);
+          setShowModalMenu(false);
           setAddNew((prev) => !prev);
         }}
       >

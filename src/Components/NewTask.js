@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-function NewTask() {
+function NewTask({ onClose, onTaskAdded }) {
   const [selectedTaskOption, setSelectedTaskOption] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const priorities = ["Later", "Regular", "Important", "Essential"];
   const colors = [
@@ -15,7 +17,24 @@ function NewTask() {
     { name: "#FACA96", className: "bg-Apricot" },
   ];
 
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
   const handleOptionChange = (value) => {
+    if (selectedTaskOption !== value) {
+      // Clear data when switching between sections
+      if (value === "Setting Priorities") {
+        setDateTime("");
+      } else if (value === "Establishing a Deadline") {
+        setSelectedPriority("");
+        setSelectedColor("");
+      }
+    }
     setSelectedTaskOption(value);
   };
 
@@ -29,7 +48,48 @@ function NewTask() {
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    console.log(color);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (selectedTaskOption === "Setting Priorities" && !selectedColor) {
+      alert("Please choose a color for the task.");
+      return;
+    }
+
+    const formData = {
+      title,
+      description,
+      taskOption: selectedTaskOption,
+      dateTime: selectedTaskOption === "Establishing a Deadline" ? dateTime : "",
+      priority: selectedTaskOption === "Setting Priorities" ? selectedPriority : "",
+      color:
+        selectedTaskOption === "Establishing a Deadline" ? "#DA4244" : selectedColor,
+    };
+
+    // Save the form data to local storage
+    const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    existingTasks.push(formData);
+    localStorage.setItem("tasks", JSON.stringify(existingTasks));
+
+    if (onTaskAdded) {
+      onTaskAdded();
+    }
+
+    // Clear the form state
+    setTitle("");
+    setDescription("");
+    setSelectedTaskOption("");
+    setDateTime("");
+    setSelectedPriority("");
+    setSelectedColor("");
+
+    if (onClose) {
+      onClose();
+    }
+
+    console.log("Form data saved to local storage:", formData);
   };
 
   return (
@@ -45,7 +105,7 @@ function NewTask() {
         shadow-form"
     >
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="h-full flex flex-col space-y-4 font-Roboto text-Gunmetal"
       >
         {/* Title input */}
@@ -56,6 +116,8 @@ function NewTask() {
             placeholder="Title..."
             className="w-full p-2 border text-sm rounded-md focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
             required
+            value={title}
+            onChange={handleTitleChange}
           />
         </div>
 
@@ -68,13 +130,15 @@ function NewTask() {
             id="description"
             maxLength={120}
             className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
+            value={description}
+            onChange={handleDescriptionChange}
           ></textarea>
         </div>
 
         {/* Choose one input */}
         <div className="text-Gunmetal">
           <p className="text-sm">Choose one:</p>
-          <div className="space-y-2 mt-2">
+          <div className="inline-block space-y-2 mt-2">
             <label className="flex items-center">
               <input
                 type="radio"
@@ -85,7 +149,7 @@ function NewTask() {
                 className="form-checkbox"
                 required
               />
-              <span className="ml-2 text-sm">Setting Priorities</span>
+              <span className="ml-2 text-sm cursor-pointer">Setting Priorities</span>
             </label>
             <label className="flex items-center">
               <input
@@ -97,11 +161,12 @@ function NewTask() {
                 className="form-checkbox"
                 required
               />
-              <span className="ml-2 text-sm">Establishing a Deadline</span>
+              <span className="ml-2 text-sm cursor-pointer">Establishing a Deadline</span>
             </label>
           </div>
         </div>
 
+        {/* Setting Priorities Section */}
         {selectedTaskOption === "Setting Priorities" && (
           <div className="flex flex-col items-center gap-1 pt-2 sm:pt-4">
             {priorities.map((priority) => (
@@ -136,6 +201,7 @@ function NewTask() {
           </div>
         )}
 
+        {/* Establishing a Deadline Section */}
         {selectedTaskOption === "Establishing a Deadline" && (
           <div className="flex flex-col items-center pt-8">
             <label htmlFor="datetime" className="text-sm">
@@ -151,6 +217,7 @@ function NewTask() {
           </div>
         )}
 
+        {/* ADD Button */}
         <div className="flex flex-col flex-grow justify-end mt-4">
           <button
             type="submit"

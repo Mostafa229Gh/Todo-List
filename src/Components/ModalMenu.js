@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function ModalMenu({ onClose }) {
+function ModalMenu({ onClose, onTaskRemove }) {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -16,6 +16,19 @@ function ModalMenu({ onClose }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
+  const handleDeleteClick = () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete all tasks?");
+    if (isConfirmed) {
+      localStorage.removeItem("tasks");
+  
+      if (onTaskRemove) {
+        onTaskRemove();
+      }
+  
+      onClose();
+    }
+  };
 
   return (
     <div
@@ -54,8 +67,8 @@ function ModalMenu({ onClose }) {
         <button type="button" className="modalMenuItem bg-Persian-Rose">
           Donate ♡
         </button>
-        <button type="button" className="modalMenuItem bg-Cherry">
-          Delete
+        <button type="button" className="modalMenuItem bg-Cherry" onClick={handleDeleteClick}>
+          Delete All
         </button>
       </div>
     </div>
