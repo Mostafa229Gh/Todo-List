@@ -1,7 +1,7 @@
 # Todo List App
 > **view the project:**  The link will placed here!
 
-An efficient and straightforward Todo List app, constructed with React and Tailwind CSS, helps users organize their tasks. This app has a clean, user-friendly design and a highly accessible interface that makes the job of managing daily tasks, setting deadlines, and prioritizing work as simple and straightforward as can be. An app such as this touts as its reason for being an opportunity for the dev to either Learn and Practice (if you're a beginner) or Brush Up on Your Skills (if you're already a pro) with React and Tailwind CSS.
+An efficient and straightforward Todo List app, constructed with React and Tailwind CSS, helps users organize their tasks. This app has a clean, user-friendly design and a highly accessible interface that makes managing daily tasks, setting deadlines, and prioritizing work as simple as possible. An app such as this touts as its reason for being an opportunity for the dev to Learn and Practice (if you're a beginner) or Brush Up on Your Skills (if you're already a pro) with React and Tailwind CSS.
 
 ---
 ## Features
@@ -9,7 +9,7 @@ An efficient and straightforward Todo List app, constructed with React and Tailw
 - **Add Tasks**: Easily add new tasks with a title, description, and optional details.
 - **Set Deadlines**: Assign due dates to tasks to stay on track.
 - **Choose Priorities**: Mark tasks as high, medium, or low priority.
-- **Customize Colors**: Choose a color for each task to visually categorize them.
+- **Customize Colors**: Choose a color for each task to categorize them visually.
 - **Dark Mode**: Switch between light and dark themes for comfortable usage in any lighting condition.
 - **Friendly Design**: Intuitive and responsive design for a smooth user experience.
 - **Pin Tasks**: Pin important tasks to the top of the list for quick access.
@@ -18,7 +18,7 @@ An efficient and straightforward Todo List app, constructed with React and Tailw
 - **Local Storage**: Save your tasks locally so they persist even after closing the app.
 
 ## Project Task Checklist
-- [x] Create design in Figma
+- [x] Create the design in Figma
 - [x] Optimize for mobile responsiveness
 - [ ] Write and review code `In progress`
 - [ ] Deploy on GitHub Pages
