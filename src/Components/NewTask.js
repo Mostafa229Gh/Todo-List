@@ -128,7 +128,7 @@ function NewTask({ onClose, onTaskAdded }) {
           </label>
           <textarea
             id="description"
-            maxLength={120}
+            maxLength={300}
             className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
             value={description}
             onChange={handleDescriptionChange}
@@ -213,6 +213,7 @@ function NewTask({ onClose, onTaskAdded }) {
               value={dateTime}
               onChange={handleDateTimeChange}
               className="p-2 border border-Pale-Mint rounded-lg"
+              required
             />
           </div>
         )}

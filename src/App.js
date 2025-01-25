@@ -59,9 +59,9 @@ function App() {
         {showModalMenu && <ModalMenu onClose={() => setShowModalMenu(false)} onTaskRemove={handleTaskUpdated} />}
       </header>
 
-      {!hasTasks && <FirstShow />}
+      {!addNew && !hasTasks && <FirstShow />}
       {addNew && <NewTask onClose={handleCloseNewTask} onTaskAdded={handleTaskUpdated} />}
-      {hasTasks && <TaskList/>}
+      {!addNew && hasTasks && <TaskList onTaskRemove={handleTaskUpdated}/>}
 
       {/* Plus Button */}
       <button

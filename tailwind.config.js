@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
+      spacing: {
+        85: "21.25rem",
+      },
       colors: {
         "Charcoal-Blue": "#121A21",
         "Pale-Mint": "#F1F8F5",
@@ -24,6 +27,15 @@ module.exports = {
       },
       boxShadow: {
         form: "2px 2px 2px rgba(0, 0, 0, 0.25)",
+      },
+      keyframes: {
+        fadeOut: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeOut: 'fadeOut 650ms linear',
       },
     },
     fontFamily: {
