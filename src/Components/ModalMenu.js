@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 
-function ModalMenu({ onClose, onTaskRemove }) {
+function ModalMenu({ onClose, onTaskRemove, darkMode, toggleDarkMode }) {
   const modalRef = useRef(null);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -61,8 +62,9 @@ function ModalMenu({ onClose, onTaskRemove }) {
         <button
           type="button"
           className="modalMenuItem border-solid border-1 border-Pale-Mint"
+          onClick={toggleDarkMode}
         >
-          Dark Mode
+          {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
         <button type="button" className="modalMenuItem bg-Persian-Rose">
           Donate ♡

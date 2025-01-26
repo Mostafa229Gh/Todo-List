@@ -62,10 +62,16 @@ function NewTask({ onClose, onTaskAdded }) {
       title,
       description,
       taskOption: selectedTaskOption,
-      dateTime: selectedTaskOption === "Establishing a Deadline" ? dateTime : "",
-      priority: selectedTaskOption === "Setting Priorities" ? selectedPriority : "",
+      dateTime:
+        selectedTaskOption === "Establishing a Deadline" ? dateTime : "",
+      priority:
+        selectedTaskOption === "Setting Priorities" ? selectedPriority : "",
       color:
-        selectedTaskOption === "Establishing a Deadline" ? "#DA4244" : selectedColor,
+        selectedTaskOption === "Establishing a Deadline"
+          ? "#DA4244"
+          : selectedColor,
+      isPin: false,
+      isDone: false,
     };
 
     // Save the form data to local storage
@@ -89,7 +95,7 @@ function NewTask({ onClose, onTaskAdded }) {
       onClose();
     }
 
-    console.log("Form data saved to local storage:", formData);
+    //console.log("Form data saved to local storage:", formData);
   };
 
   return (
@@ -101,12 +107,12 @@ function NewTask({ onClose, onTaskAdded }) {
         fixed top-1/2 left-1/2 -translate-x-1/2 
         -translate-y-1/2 sm:-translate-y-[55%] 
         rounded-xl 
-        bg-Light-Sky 
-        shadow-form"
+        bg-Light-Sky dark:bg-Dark-Teal
+        shadow-form tracking-wide"
     >
       <form
         onSubmit={handleSubmit}
-        className="h-full flex flex-col space-y-4 font-Roboto text-Gunmetal"
+        className="h-full flex flex-col space-y-4 font-Roboto text-Gunmetal dark:text-Pale-Mint"
       >
         {/* Title input */}
         <div>
@@ -114,8 +120,9 @@ function NewTask({ onClose, onTaskAdded }) {
             type="text"
             id="title"
             placeholder="Title..."
-            className="w-full p-2 border text-sm rounded-md focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
+            className="w-full p-2 border text-sm rounded-md focus:ring-1 focus:ring-Cool-Gray dark:focus:ring-Soft-Beige focus:outline-none bg-Pale-Mint dark:bg-Deep-Steel"
             required
+            autocomplete="off"
             value={title}
             onChange={handleTitleChange}
           />
@@ -123,20 +130,23 @@ function NewTask({ onClose, onTaskAdded }) {
 
         {/* Description input */}
         <div>
-          <label htmlFor="description" className="block text-sm text-Gunmetal">
+          <label
+            htmlFor="description"
+            className="block text-sm text-Gunmetal dark:text-Cool-Aqua"
+          >
             Description
           </label>
           <textarea
             id="description"
-            maxLength={120}
-            className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
+            maxLength={250}
+            className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray dark:focus:ring-Soft-Beige focus:outline-none bg-Pale-Mint dark:bg-Deep-Steel"
             value={description}
             onChange={handleDescriptionChange}
           ></textarea>
         </div>
 
         {/* Choose one input */}
-        <div className="text-Gunmetal">
+        <div className="text-Gunmetal dark:text-Cool-Aqua">
           <p className="text-sm">Choose one:</p>
           <div className="inline-block space-y-2 mt-2">
             <label className="flex items-center">
@@ -149,7 +159,9 @@ function NewTask({ onClose, onTaskAdded }) {
                 className="form-checkbox"
                 required
               />
-              <span className="ml-2 text-sm cursor-pointer">Setting Priorities</span>
+              <span className="ml-2 text-sm cursor-pointer">
+                Setting Priorities
+              </span>
             </label>
             <label className="flex items-center">
               <input
@@ -161,7 +173,9 @@ function NewTask({ onClose, onTaskAdded }) {
                 className="form-checkbox"
                 required
               />
-              <span className="ml-2 text-sm cursor-pointer">Establishing a Deadline</span>
+              <span className="ml-2 text-sm cursor-pointer">
+                Establishing a Deadline
+              </span>
             </label>
           </div>
         </div>
@@ -170,7 +184,7 @@ function NewTask({ onClose, onTaskAdded }) {
         {selectedTaskOption === "Setting Priorities" && (
           <div className="flex flex-col items-center gap-1 pt-2 sm:pt-4">
             {priorities.map((priority) => (
-              <label key={priority} className="priorities">
+              <label key={priority} className="priorities dark:bg-Ocean-Blue">
                 <input
                   type="radio"
                   name="priorityOption"
@@ -190,7 +204,7 @@ function NewTask({ onClose, onTaskAdded }) {
                   key={name}
                   className={`w-10 h-10 rounded-full ${className} shadow-form ${
                     selectedColor === name
-                      ? "shadow-none ring-1 ring-Charcoal-Blue "
+                      ? "shadow-none ring-1 ring-Charcoal-Blue dark:ring-Cherry"
                       : ""
                   }`}
                   onClick={() => handleColorClick(name)}
@@ -212,7 +226,8 @@ function NewTask({ onClose, onTaskAdded }) {
               id="datetime"
               value={dateTime}
               onChange={handleDateTimeChange}
-              className="p-2 border border-Pale-Mint rounded-lg"
+              className="p-2 border border-Pale-Mint dark:border-Ocean-Blue rounded-lg dark:bg-Ocean-Blue"
+              required
             />
           </div>
         )}
@@ -221,7 +236,7 @@ function NewTask({ onClose, onTaskAdded }) {
         <div className="flex flex-col flex-grow justify-end mt-4">
           <button
             type="submit"
-            className="fixed h-8 w-28 sm:w-36 bg-Charcoal-Blue text-white rounded-md self-center"
+            className="fixed h-8 w-28 sm:w-36 bg-Charcoal-Blue dark:bg-Emerald-Teal text-white rounded-md self-center"
           >
             Add
           </button>

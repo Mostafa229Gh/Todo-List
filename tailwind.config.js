@@ -1,8 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
+      spacing: {
+        85: "21.25rem",
+      },
       colors: {
         "Charcoal-Blue": "#121A21",
         "Pale-Mint": "#F1F8F5",
@@ -18,12 +22,28 @@ module.exports = {
         "Steel-Blue": "#425262",
         Cherry: "#D53030",
         "Persian-Rose": "#F924A7",
+        "Soft-Beige": "#EDE6A7",
+        "Cool-Aqua": "#A6D6D6",
+        "Deep-Steel": "#3A4B61",
+        "Slate-Gray": "#353B48",
+        "Ocean-Blue": "#2E475A",
+        "Dark-Teal": "#24303C",
+        "Emerald-Teal": "#166A5E",
       },
       transitionTimingFunction: {
         ebol: "cubic-bezier(0, 0, 0.01, 1)",
       },
       boxShadow: {
         form: "2px 2px 2px rgba(0, 0, 0, 0.25)",
+      },
+      keyframes: {
+        fadeOut: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        fadeOut: "fadeOut 650ms linear",
       },
     },
     fontFamily: {
