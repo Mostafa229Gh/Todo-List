@@ -66,6 +66,8 @@ function NewTask({ onClose, onTaskAdded }) {
       priority: selectedTaskOption === "Setting Priorities" ? selectedPriority : "",
       color:
         selectedTaskOption === "Establishing a Deadline" ? "#DA4244" : selectedColor,
+      isPin:false,
+      isDone:false,
     };
 
     // Save the form data to local storage
