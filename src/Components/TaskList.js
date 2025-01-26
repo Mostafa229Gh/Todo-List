@@ -130,7 +130,7 @@ function TaskList({ onTaskRemove }) {
                   key=${index}
                   flex flex-col justify-between sm:flex-grow-0
                   w-80 sm:w-96
-                  rounded-xl
+                  rounded-xl dark:opacity-85
                   ${!isPriority || task.isDone ? "text-white" : "text-Gunmetal"}
                   p-2 duration-500 ease-ebol
                   ${isTruncated[index] ? "h-20 sm:h-28" : "h-44 sm:h-52"}
@@ -274,7 +274,7 @@ function TaskList({ onTaskRemove }) {
                 </div>
               </div>
               {index === lastDateTimeTaskIndex && (
-                <span className="w-85 sm:w-4/5 h-0 rounded-sm my-3 border-1 border-solid border-Gunmetal"></span>
+                <span className="w-85 sm:w-4/5 h-0 rounded-sm my-3 border-1 border-solid border-Gunmetal dark:border-Cool-Aqua"></span>
               )}
             </React.Fragment>
           );
