@@ -1,3 +1,4 @@
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import React, { useState, useEffect, useRef } from "react";
 
 // Priority levels for sorting
