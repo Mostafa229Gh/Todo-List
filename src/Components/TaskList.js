@@ -9,24 +9,29 @@ const priorityLevels = {
 };
 // Sorting function
 const sortTasks = (tasks) => {
-  const timeSensitiveTasks = tasks.filter((task) => task.dateTime);
-  const nonTimeSensitiveTasks = tasks.filter((task) => !task.dateTime);
+  const pinnedTasks = tasks.filter((task) => task.isPin);
+  const nonPinnedTasks = tasks.filter((task) => !task.isPin);
+
+  pinnedTasks.sort(
+    (a, b) => priorityLevels[b.priority] - priorityLevels[a.priority]
+  );
+
+  const timeSensitiveTasks = nonPinnedTasks.filter((task) => task.dateTime);
+  const nonTimeSensitiveTasks = nonPinnedTasks.filter((task) => !task.dateTime);
 
   timeSensitiveTasks.sort(
     (a, b) => new Date(a.dateTime) - new Date(b.dateTime)
   );
-
   nonTimeSensitiveTasks.sort(
     (a, b) => priorityLevels[b.priority] - priorityLevels[a.priority]
   );
 
-  return [...timeSensitiveTasks, ...nonTimeSensitiveTasks];
+  return [...pinnedTasks, ...timeSensitiveTasks, ...nonTimeSensitiveTasks];
 };
 
 function TaskList({ onTaskRemove }) {
   const [tasks, setTasks] = useState([]);
   const [isTruncated, setIsTruncated] = useState({});
-  const [isPin, setIsPin] = useState({});
   const taskRefs = useRef([]);
 
   useEffect(() => {
@@ -34,14 +39,11 @@ function TaskList({ onTaskRemove }) {
     const sortedTasks = sortTasks(savedTasks);
     setTasks(sortedTasks);
 
-    const initialPinState = {};
     const initialTruncatedState = {};
     savedTasks.forEach((_, index) => {
       initialTruncatedState[index] = true;
-      initialPinState[index] = false;
     });
     setIsTruncated(initialTruncatedState);
-    setIsPin(initialPinState);
   }, []);
 
   const handleToggle = (index) => {
@@ -81,10 +83,14 @@ function TaskList({ onTaskRemove }) {
   };
 
   const handlePin = (index) => {
-    setIsPin((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, isPin: !task.isPin } : task
+    );
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    setTimeout(() => {
+      setTasks(sortTasks(updatedTasks));
+    }, 300);
+    handleToggle(index);
   };
 
   const handleDone = (index) => {
@@ -172,7 +178,7 @@ function TaskList({ onTaskRemove }) {
                   </label>
 
                   <div className="flex flex-row gap-8 scale-[0.85]">
-                    {/* this is for edit data and update should open newTask form again to edit datas and add again */}
+                    {/* Edit button */}
                     <button className="w-6 h-7">
                       <svg
                         className={`${
@@ -196,7 +202,7 @@ function TaskList({ onTaskRemove }) {
                         />
                       </svg>
                     </button>
-
+                    {/* Delete button */}
                     <button
                       className="w-6 h-7"
                       onClick={() => handleDelete(index)}
@@ -224,13 +230,13 @@ function TaskList({ onTaskRemove }) {
                         />
                       </svg>
                     </button>
-
+                    {/* Pin button */}
                     {isPriority && (
                       <button
                         className="w-6 h-7"
                         onClick={() => handlePin(index)}
                       >
-                        {!isPin[index] && (
+                        {!task.isPin && (
                           <svg
                             className={`${
                               task.isDone ? "fill-white" : "fill-Gunmetal"
@@ -244,7 +250,7 @@ function TaskList({ onTaskRemove }) {
                             />
                           </svg>
                         )}
-                        {isPin[index] && (
+                        {task.isPin && (
                           <svg
                             className={`${
                               task.isDone ? "fill-white" : "fill-Gunmetal"

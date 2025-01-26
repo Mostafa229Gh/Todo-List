@@ -91,7 +91,7 @@ function NewTask({ onClose, onTaskAdded }) {
       onClose();
     }
 
-    console.log("Form data saved to local storage:", formData);
+    //console.log("Form data saved to local storage:", formData);
   };
 
   return (
@@ -118,6 +118,7 @@ function NewTask({ onClose, onTaskAdded }) {
             placeholder="Title..."
             className="w-full p-2 border text-sm rounded-md focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
             required
+            autocomplete="off"
             value={title}
             onChange={handleTitleChange}
           />
@@ -130,7 +131,7 @@ function NewTask({ onClose, onTaskAdded }) {
           </label>
           <textarea
             id="description"
-            maxLength={300}
+            maxLength={250}
             className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray focus:outline-none bg-Pale-Mint"
             value={description}
             onChange={handleDescriptionChange}
