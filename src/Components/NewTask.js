@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 
-function NewTask({ onClose, onTaskAdded }) {
-  const [selectedTaskOption, setSelectedTaskOption] = useState("");
-  const [dateTime, setDateTime] = useState("");
-  const [selectedPriority, setSelectedPriority] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+function NewTask({ onClose, onTaskAdded, taskToEdit, onTaskUpdated }) {
+  const [selectedTaskOption, setSelectedTaskOption] = useState(
+    taskToEdit ? taskToEdit.taskOption : ""
+  );
+  const [dateTime, setDateTime] = useState(
+    taskToEdit ? taskToEdit.dateTime : ""
+  );
+  const [selectedPriority, setSelectedPriority] = useState(
+    taskToEdit ? taskToEdit.priority : ""
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    taskToEdit ? taskToEdit.color : ""
+  );
+  const [title, setTitle] = useState(taskToEdit ? taskToEdit.title : "");
+  const [description, setDescription] = useState(
+    taskToEdit ? taskToEdit.description : ""
+  );
 
   const priorities = ["Later", "Regular", "Important", "Essential"];
   const colors = [
@@ -74,13 +84,27 @@ function NewTask({ onClose, onTaskAdded }) {
       isDone: false,
     };
 
-    // Save the form data to local storage
     const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    existingTasks.push(formData);
+    if (taskToEdit) {
+      const taskIndex = existingTasks.findIndex(
+        (task) =>
+          task.title === taskToEdit.title &&
+          task.description === taskToEdit.description
+      );
+      if (taskIndex !== -1) {
+        existingTasks[taskIndex] = formData;
+      }
+    } else {
+      existingTasks.push(formData);
+    }
     localStorage.setItem("tasks", JSON.stringify(existingTasks));
 
     if (onTaskAdded) {
       onTaskAdded();
+    }
+
+    if (onTaskUpdated) {
+      onTaskUpdated();
     }
 
     // Clear the form state
@@ -94,8 +118,6 @@ function NewTask({ onClose, onTaskAdded }) {
     if (onClose) {
       onClose();
     }
-
-    //console.log("Form data saved to local storage:", formData);
   };
 
   return (
@@ -233,13 +255,32 @@ function NewTask({ onClose, onTaskAdded }) {
         )}
 
         {/* ADD Button */}
-        <div className="flex flex-col flex-grow justify-end mt-4">
+        <div
+          className={`flex flex-grow mt-4 ${
+            taskToEdit
+              ? "flex-row justify-center gap-3"
+              : "flex-col justify-end"
+          }`}
+        >
           <button
             type="submit"
-            className="fixed h-8 w-28 sm:w-36 bg-Charcoal-Blue dark:bg-Emerald-Teal text-white rounded-md self-center"
+            className="h-8 w-28 sm:w-36 bg-Charcoal-Blue dark:bg-Emerald-Teal text-white rounded-md self-center"
           >
-            Add
+            {taskToEdit ? "Edit" : "Add"}
           </button>
+          {taskToEdit && (
+            <button
+              type="button"
+              className="h-8 w-28 sm:w-36 bg-Cherry text-white rounded-md self-center"
+              onClick={() => {
+                if (window.confirm("Discard changes?")) {
+                  onClose();
+                }
+              }}
+            >
+              Cancel
+            </button>
+          )}
         </div>
       </form>
     </div>
