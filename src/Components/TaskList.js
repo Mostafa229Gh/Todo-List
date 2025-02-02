@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import NewTask from "./NewTask";
 
 // Priority levels for sorting
 const priorityLevels = {
@@ -32,6 +33,7 @@ const sortTasks = (tasks) => {
 function TaskList({ onTaskRemove }) {
   const [tasks, setTasks] = useState([]);
   const [isTruncated, setIsTruncated] = useState({});
+  const [editTask, setEditTask] = useState(null);
   const taskRefs = useRef([]);
 
   useEffect(() => {
@@ -99,6 +101,17 @@ function TaskList({ onTaskRemove }) {
     );
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     setTasks(updatedTasks);
+  };
+
+  const handleTaskUpdated = () => {
+    const updatedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    setTasks(sortTasks(updatedTasks));
+  };
+  const handleEdit = (index) => {
+    setEditTask(tasks[index]);
+  };
+  const handleCloseEditTask = () => {
+    setEditTask(null);
   };
 
   const lastDateTimeTaskIndex = tasks.findLastIndex((task) => task.dateTime);
@@ -179,7 +192,10 @@ function TaskList({ onTaskRemove }) {
 
                   <div className="flex flex-row gap-8 scale-[0.85]">
                     {/* Edit button */}
-                    <button className="w-6 h-7">
+                    <button
+                      className="w-6 h-7"
+                      onClick={() => handleEdit(index)}
+                    >
                       <svg
                         className={`${
                           !isPriority || task.isDone
@@ -280,6 +296,15 @@ function TaskList({ onTaskRemove }) {
           );
         })}
       </div>
+      {editTask && (
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex justify-center items-center">
+          <NewTask
+            onClose={handleCloseEditTask}
+            taskToEdit={editTask}
+            onTaskUpdated={handleTaskUpdated}
+          />
+        </div>
+      )}
     </div>
   );
 }
