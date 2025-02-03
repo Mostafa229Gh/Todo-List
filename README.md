@@ -1,5 +1,5 @@
 # Todo List App
-> **view the project:**  The link will placed here!
+> **view the project:** [Open the Project](https://mostafa229gh.github.io/Todo-List/)
 
 An efficient and straightforward Todo List app, constructed with React and Tailwind CSS, helps users organize their tasks. This app has a clean, user-friendly design and a highly accessible interface that makes managing daily tasks, setting deadlines, and prioritizing work as simple as possible. An app such as this touts as its reason for being an opportunity for the dev to Learn and Practice (if you're a beginner) or Brush Up on Your Skills (if you're already a pro) with React and Tailwind CSS.
 
@@ -20,9 +20,9 @@ An efficient and straightforward Todo List app, constructed with React and Tailw
 ## Project Task Checklist
 - [x] Create the design in Figma
 - [x] Optimize for mobile responsiveness
-- [ ] Write and review code `In progress`
-- [ ] Deploy on GitHub Pages
-- [ ] Implement new features
+- [x] Write and review code
+- [x] Deploy on GitHub Pages
+- [ ] Implement new features `In progress`
 
 ## Technology Stack
 - **Local Storage**: Browser's local storage API for data persistence
