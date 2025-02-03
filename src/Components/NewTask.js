@@ -141,6 +141,7 @@ function NewTask({ onClose, onTaskAdded, taskToEdit, onTaskUpdated }) {
           <input
             type="text"
             id="title"
+            maxLength={45}
             placeholder="Title..."
             className="w-full p-2 border text-sm rounded-md focus:ring-1 focus:ring-Cool-Gray dark:focus:ring-Soft-Beige focus:outline-none bg-Pale-Mint dark:bg-Deep-Steel"
             required
@@ -160,7 +161,7 @@ function NewTask({ onClose, onTaskAdded, taskToEdit, onTaskUpdated }) {
           </label>
           <textarea
             id="description"
-            maxLength={250}
+            maxLength={225}
             className="w-full p-2 border text-sm rounded-md max-h-24 min-h-24 focus:ring-1 focus:ring-Cool-Gray dark:focus:ring-Soft-Beige focus:outline-none bg-Pale-Mint dark:bg-Deep-Steel"
             value={description}
             onChange={handleDescriptionChange}
