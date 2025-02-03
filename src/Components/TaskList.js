@@ -123,7 +123,7 @@ function TaskList({ onTaskRemove }) {
           const isPriority = task.priority;
           const fullText = task.description;
           const truncatedText =
-            fullText.split(" ").slice(0, 7).join(" ") + "...";
+            fullText.slice(0, 30) + "...";
 
           const dateObject = new Date(task.dateTime);
           const date = dateObject.toLocaleDateString("en-US", {
@@ -146,14 +146,14 @@ function TaskList({ onTaskRemove }) {
                   rounded-xl dark:opacity-85
                   ${!isPriority || task.isDone ? "text-white" : "text-Gunmetal"}
                   p-2 duration-500 ease-ebol
-                  ${isTruncated[index] ? "h-20 sm:h-28" : "h-44 sm:h-52"}
+                  ${isTruncated[index] ? "h-20 sm:h-28" : "h-[11.5rem] sm:h-56"}
                 `}
               >
                 <div
                   className="flex justify-between h-full cursor-pointer"
                   onClick={() => handleToggle(index)}
                 >
-                  <div className={`${isPriority ? "" : "w-56 sm:w-72"}`}>
+                  <div className={`break-all ${isPriority ? "max-w-full" : "w-56 sm:w-72"}`}>
                     <h1 className="font-DoppioOne sm:text-lg">{task.title}</h1>
                     <p
                       className={`px-1 mt-1 font-Roboto text-justify text-xs sm:text-sm ${

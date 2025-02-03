@@ -29,12 +29,16 @@ module.exports = {
         "Ocean-Blue": "#2E475A",
         "Dark-Teal": "#24303C",
         "Emerald-Teal": "#166A5E",
+        "Ivory-Cream": "#f1efe7",
+        "LinkedIn-Blue":"#0a66c2",
       },
       transitionTimingFunction: {
         ebol: "cubic-bezier(0, 0, 0.01, 1)",
       },
       boxShadow: {
         form: "2px 2px 2px rgba(0, 0, 0, 0.25)",
+        donate: "0px 0px 8px rgba(0, 0, 0, 0.5)",
+        donateDark: "0px 0px 8px rgba(255, 255, 255, 0.5)",
       },
       keyframes: {
         fadeOut: {
