@@ -4,18 +4,14 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "favicon.png",
-      "sizes": "256x256",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "256x256"
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "maskable_icon.png",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2C3E50",
+  "background_color": "#c1dde1"
 }
