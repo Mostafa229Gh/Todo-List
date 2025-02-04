@@ -1,11 +1,12 @@
-const CACHE_NAME = "todo-app-cache-v1";
+const CACHE_NAME = "todo-app-cache-v1.01";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/static/js/bundle.js",
-  "/static/js/main.chunk.js",
-  "/static/js/0.chunk.js",
-  "/static/css/main.css",
+  "/static/css/main.196adf7c.css",
+  "/static/js/main.898bf3ba.js",
+  "/static/js/453.81f383cb.chunk.js",
+  "/static/media/check.a9a35a3745131b9fd766.svg",
+  "/LogoD.png"
 ];
 
 self.addEventListener("install", (event) => {
