@@ -2,7 +2,7 @@ const CACHE_NAME = "todo-app-cache-v1.03";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    fetch("./asset-manifest.json")
+    fetch("./asset-manifest.json") // دریافت فایل manifest
       .then((response) => response.json())
       .then((manifest) => {
         const urlsToCache = [
