@@ -99,7 +99,6 @@ function ModalMenu({ onClose, onTaskRemove, darkMode, toggleDarkMode }) {
             className="
               flex flex-col gap-3
               w-4/5
-              h-3/5 sm:h-2/5
               p-4
               rounded-xl
               text-Charcoal-Blue dark:text-Pale-Mint
