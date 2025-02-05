@@ -5,12 +5,12 @@
   "icons": [
     {
       "purpose": "maskable",
-      "sizes": "853.3333333333334x853.3333333333334",
+      "sizes": "512x512",
       "src": "maskable_icon.png",
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/Todo-List/",
   "display": "standalone",
   "theme_color": "#2C3E50",
   "background_color": "#c1dde1"

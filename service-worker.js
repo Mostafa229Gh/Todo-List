@@ -1,19 +1,17 @@
-const CACHE_NAME = "todo-app-cache-v1.05";
+const CACHE_NAME = "todo-app-cache-v1.06";
+const BASE_PATH = "/Todo-List";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    fetch("./asset-manifest.json")
+    fetch(`${BASE_PATH}/asset-manifest.json`)
       .then((response) => response.json())
       .then((manifest) => {
-        const basePath = "/Todo-List";
         const urlsToCache = [
-          `${basePath}/`,
-          `${basePath}${manifest.files["index.html"]}`,
-          `${basePath}${manifest.files["main.css"]}`,
-          `${basePath}${manifest.files["main.js"]}`,
+          `${BASE_PATH}/`,
+          `${BASE_PATH}${manifest.files["index.html"]}`,
           ...Object.values(manifest.files)
             .filter((url) => url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".svg"))
-            .map((url) => `${basePath}${url}`)
+            .map((url) => `${BASE_PATH}${url}`)
         ];
         return caches.open(CACHE_NAME).then((cache) => {
           console.log("Caching files:", urlsToCache);
@@ -42,21 +40,16 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+      if (cachedResponse) return cachedResponse;
       return fetch(event.request)
         .then((response) => {
-          if (!response || response.status !== 200 || response.type !== "basic") {
-            return response;
-          }
           let responseClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseClone);
           });
           return response;
         })
-        .catch(() => caches.match("/Todo-List/index.html")); 
+        .catch(() => caches.match(`${BASE_PATH}/index.html`));
     })
   );
 });
