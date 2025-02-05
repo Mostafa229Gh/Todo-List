@@ -1,16 +1,19 @@
-const CACHE_NAME = "todo-app-cache-v1.04";
+const CACHE_NAME = "todo-app-cache-v1.05";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     fetch("./asset-manifest.json")
       .then((response) => response.json())
       .then((manifest) => {
+        const basePath = "/Todo-List";
         const urlsToCache = [
-          "./",
-          manifest.files["index.html"],
-          manifest.files["main.css"],
-          manifest.files["main.js"],
-          ...Object.values(manifest.files).filter((url) => url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".svg"))
+          `${basePath}/`,
+          `${basePath}${manifest.files["index.html"]}`,
+          `${basePath}${manifest.files["main.css"]}`,
+          `${basePath}${manifest.files["main.js"]}`,
+          ...Object.values(manifest.files)
+            .filter((url) => url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".svg"))
+            .map((url) => `${basePath}${url}`)
         ];
         return caches.open(CACHE_NAME).then((cache) => {
           console.log("Caching files:", urlsToCache);
@@ -38,14 +41,22 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        let responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
-        return response;
-      })
-      .catch(() => caches.match(event.request))
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request)
+        .then((response) => {
+          if (!response || response.status !== 200 || response.type !== "basic") {
+            return response;
+          }
+          let responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+          return response;
+        })
+        .catch(() => caches.match("/Todo-List/index.html")); 
+    })
   );
 });
