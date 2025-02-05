@@ -1,12 +1,12 @@
-const CACHE_NAME = "todo-app-cache-v1.01";
+const CACHE_NAME = "todo-app-cache-v1.02";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/static/css/main.196adf7c.css",
-  "/static/js/main.898bf3ba.js",
-  "/static/js/453.81f383cb.chunk.js",
-  "/static/media/check.a9a35a3745131b9fd766.svg",
-  "/LogoD.png"
+  "./",
+  "./index.html",
+  "./static/css/main.196adf7c.css",
+  "./static/js/main.898bf3ba.js",
+  "./static/js/453.81f383cb.chunk.js",
+  "./static/media/check.a9a35a3745131b9fd766.svg",
+  "./LogoD.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -35,8 +35,14 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        let responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
