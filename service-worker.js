@@ -1,20 +1,23 @@
-const CACHE_NAME = "todo-app-cache-v1.02";
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./static/css/main.196adf7c.css",
-  "./static/js/main.898bf3ba.js",
-  "./static/js/453.81f383cb.chunk.js",
-  "./static/media/check.a9a35a3745131b9fd766.svg",
-  "./LogoD.png"
-];
+const CACHE_NAME = "todo-app-cache-v1.04";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching files...");
-      return cache.addAll(urlsToCache);
-    })
+    fetch("./asset-manifest.json")
+      .then((response) => response.json())
+      .then((manifest) => {
+        const urlsToCache = [
+          "./",
+          manifest.files["index.html"],
+          manifest.files["main.css"],
+          manifest.files["main.js"],
+          ...Object.values(manifest.files).filter((url) => url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".svg"))
+        ];
+        return caches.open(CACHE_NAME).then((cache) => {
+          console.log("Caching files:", urlsToCache);
+          return cache.addAll(urlsToCache);
+        });
+      })
+      .catch((error) => console.error("Error fetching asset-manifest.json:", error))
   );
 });
 

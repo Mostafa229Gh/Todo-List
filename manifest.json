@@ -8,12 +8,6 @@
       "sizes": "853.3333333333334x853.3333333333334",
       "src": "maskable_icon.png",
       "type": "image/png"
-    },
-    {
-      "purpose": "maskable",
-      "sizes": "128x128",
-      "src": "maskable_icon_x128.png",
-      "type": "image/png"
     }
   ],
   "start_url": ".",
